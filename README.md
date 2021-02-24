@@ -32,5 +32,9 @@ optional arguments:
 ## How it works
 Program appends the shellcode binary to a barebones assembly file using the `incbin` macro. It is then automatically compiled using [NASM](https://www.nasm.us/) and then linked using [GNU Linker (ld)](https://linux.die.net/man/1/ld).
 
+## Todos
+  * Include a sample shellcode binary for testing
+  * Single binary release for easy deployment (So no need for Python)
+
 ## Contributing
 Feel free to submit a pull request if you want to improve this tool!
