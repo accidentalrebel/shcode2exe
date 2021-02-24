@@ -3,10 +3,12 @@ import sys
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--output',
-                    help='Set output file name.')
+parser.add_argument('-o',
+                    '--output',
+                    help='Set output exe file.')
+parser.add_argument('input',
+                    help='The input file containing the shellcode.')
 args = parser.parse_args()
-print(args.output)
 
 current_bit = '32'
 
@@ -16,10 +18,14 @@ if args.output:
 else:
     filename = 'output'
 
+if args.input and not path.exists(args.input):
+    print('ERROR: File ' + args.input + ' does not exist!')
+    sys.exit()
+
 ASM_FILE_CONTENTS = '\tglobal _start\n' \
     '\tsection .text\n' \
     '_start:\n' \
-    '\tincbin "test.bin"\n'
+    '\tincbin "' + args.input + '"\n'
 
 with open(filename + '.asm', 'w+') as f:
     f.write(ASM_FILE_CONTENTS)
