@@ -1,16 +1,19 @@
 from os import uname, system, remove, path
 import sys
-import argparse
+from argparse import ArgumentParser
 
-parser = argparse.ArgumentParser()
+parser = ArgumentParser(description='Compile a binary shellcode blob into an exe file. Can target both 32bit or 64bit architecture.')
 parser.add_argument('-o',
                     '--output',
                     help='Set output exe file.')
+parser.add_argument('-a',
+                    '--architecture',
+                    choices=['32', '64'],
+                    default = '32',
+                    help='The windows architecture to use')
 parser.add_argument('input',
                     help='The input file containing the shellcode.')
 args = parser.parse_args()
-
-current_bit = '32'
 
 if args.output:
     filename = path.basename(args.output)
@@ -33,10 +36,10 @@ with open(filename + '.asm', 'w+') as f:
 cmd = 'tools/nasm/nasm'
 if uname().sysname != "Linux":
     cmd += '.exe'
-cmd += ' -f win' + current_bit + ' -o ' + filename + '.obj ' + filename + '.asm' 
+cmd += ' -f win' + args.architecture + ' -o ' + filename + '.obj ' + filename + '.asm' 
 system(cmd)
 
-cmd = 'tools/linkers/ld' + current_bit
+cmd = 'tools/linkers/ld' + args.architecture
 if uname().sysname != "Linux":
     cmd += '.exe'
 cmd += ' -o ' + args.output + ' ' + filename + '.obj'
