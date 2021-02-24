@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from os import uname, system, remove, path
 import sys
 from argparse import ArgumentParser
