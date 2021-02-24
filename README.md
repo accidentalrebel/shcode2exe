@@ -1,5 +1,14 @@
-# shcode2exe
-Shellcode to exe. Compile a binary shellcode blob into an exe file from Windows or Linux. Can target both 32bit or 64bit Windows architecture. 
+# shcode2exe (Shellcode to exe)
+Compile a binary shellcode blob into an exe file from Windows or Linux. 
+
+## Features
+  * Can target both 32bit or 64bit Windows architecture. 
+  * Cross platform. Works on Linux or Windows.
+  * No external dependencies except for Python (No need for Wine)
+  * Tested working with Python v3.3 and above
+  * Tested working on Windows 7 (Non SP1) and above
+  
+Created mainly for malware analysis but can also be used for exploit development. 
 
 Inspired by [shellcode2exe](https://github.com/repnz/shellcode2exe).
 
