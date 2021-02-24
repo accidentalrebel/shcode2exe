@@ -38,15 +38,18 @@ ASM_FILE_CONTENTS = '\tglobal _start\n' \
 with open(filename + '.asm', 'w+') as f:
     f.write(ASM_FILE_CONTENTS)
 
-cmd = 'tools/nasm/nasm'
+cmd = os.getcwd() + '/tools/nasm/nasm'
 if os.name != 'posix':
     cmd += '.exe'
+    cmd = cmd.replace('/', '\\')
+    
 cmd += ' -f win' + args.architecture + ' -o ' + filename + '.obj ' + filename + '.asm' 
 subprocess.check_output(cmd, shell=True)
 
-cmd = 'tools/linkers/ld' + args.architecture
+cmd = os.getcwd() + '/tools/linkers/ld' + args.architecture
 if os.name != 'posix':
     cmd += '.exe'
+    cmd = cmd.replace('/', '\\')
 cmd += ' -o '
 
 if args.output:
