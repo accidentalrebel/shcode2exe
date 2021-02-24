@@ -1,26 +1,27 @@
-from os import uname, system
+from os import uname, system, remove
 
 current_bit = '32'
 filename = 'output'
 
-ASM_FILE_NAME = 'shcode.asm'
 ASM_FILE_CONTENTS = '\tglobal _start\n' \
     '\tsection .text\n' \
     '_start:\n' \
     '\tincbin "test.bin"\n'
 
-with open(ASM_FILE_NAME, 'w+') as f:
+with open(filename + '.asm', 'w+') as f:
     f.write(ASM_FILE_CONTENTS)
 
 cmd = 'tools/nasm/nasm'
 if uname().sysname != "Linux":
     cmd += '.exe'
-cmd += ' -f win' + current_bit + ' -o shcode.obj shcode.asm' 
+cmd += ' -f win' + current_bit + ' -o ' + filename + '.obj ' + filename + '.asm' 
 system(cmd)
 
 cmd = 'tools/linkers/ld' + current_bit
 if uname().sysname != "Linux":
     cmd += '.exe'
-cmd += ' -o ' + filename + '.exe shcode.obj'
+cmd += ' -o ' + filename + '.exe ' + filename + '.obj'
 system(cmd)
 
+remove(filename + '.obj')
+remove(filename + '.asm')
