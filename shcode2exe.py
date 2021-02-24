@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 
-from os import uname, system, remove, path
+#from os import uname, system, remove, path
+import os
 import sys
+import subprocess
 from argparse import ArgumentParser
 
 parser = ArgumentParser(description='Compile a binary shellcode blob into an exe file. Can target both 32bit or 64bit architecture.')
@@ -16,14 +18,15 @@ parser.add_argument('-a',
 parser.add_argument('input',
                     help='The input file containing the shellcode.')
 args = parser.parse_args()
+dest = args.output
 
 if args.output:
-    filename = path.basename(args.output)
+    filename = os.path.basename(args.output)
     filename = filename.split('.')[0]
 else:
     filename = 'output'
 
-if args.input and not path.exists(args.input):
+if args.input and not os.path.exists(args.input):
     print('ERROR: File ' + args.input + ' does not exist!')
     sys.exit()
 
@@ -36,16 +39,23 @@ with open(filename + '.asm', 'w+') as f:
     f.write(ASM_FILE_CONTENTS)
 
 cmd = 'tools/nasm/nasm'
-if uname().sysname != "Linux":
+if os.name != 'posix':
     cmd += '.exe'
 cmd += ' -f win' + args.architecture + ' -o ' + filename + '.obj ' + filename + '.asm' 
-system(cmd)
+subprocess.check_output(cmd, shell=True)
 
 cmd = 'tools/linkers/ld' + args.architecture
-if uname().sysname != "Linux":
+if os.name != 'posix':
     cmd += '.exe'
-cmd += ' -o ' + args.output + ' ' + filename + '.obj'
-system(cmd)
+cmd += ' -o '
 
-remove(filename + '.obj')
-remove(filename + '.asm')
+if args.output:
+    cmd += args.output
+else:
+    cmd += filename + '.exe'
+    
+cmd += ' ' + filename + '.obj'
+subprocess.check_output(cmd, shell=True)
+
+os.remove(filename + '.obj')
+os.remove(filename + '.asm')
