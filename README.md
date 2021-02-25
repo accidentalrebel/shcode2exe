@@ -54,6 +54,20 @@ $ file test-blob.exe
 test-blob.exe: PE32+ executable (console) x86-64 (stripped to external PDB), for MS Windows
 ```
 
+## Shellcode Samples
+I've included two samples in this repository. 
+
+  * test.bin - Is a file containing a shellcode blob
+  * test.txt - Is a file containing a shellcode string
+
+You can also generate shellcode samples using the Metasploit tool [msfvenom](https://github.com/rapid7/metasploit-framework/wiki/How-to-use-msfvenom).
+
+Here's an example on how to generate a simple Windows exec payload:
+
+```console
+$ msfvenom -a x86 --platform windows -p windows/exec cmd=calc.exe -o test2.bin
+```
+
 ## How it works
 Program appends the shellcode binary to a barebones assembly file using the `incbin` macro. It is then automatically compiled using [NASM](https://www.nasm.us/) and then linked using [GNU Linker (ld)](https://linux.die.net/man/1/ld).
 
