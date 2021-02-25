@@ -10,6 +10,10 @@ parser = ArgumentParser(description='Compile a binary shellcode blob into an exe
 parser.add_argument('-o',
                     '--output',
                     help='Set output exe file.')
+parser.add_argument('-s',
+                    '--string',
+                    action='store_true',
+                    help='Set if input file contains shellcode in string format.')
 parser.add_argument('-a',
                     '--architecture',
                     choices=['32', '64'],
@@ -26,17 +30,26 @@ if args.output:
 else:
     filename = 'output'
 
-if args.input and not os.path.exists(args.input):
-    print('ERROR: File ' + args.input + ' does not exist!')
+file_input = args.input
+    
+if file_input and not os.path.exists(file_input):
+    print('ERROR: File ' + file_input + ' does not exist!')
     sys.exit()
 
-ASM_FILE_CONTENTS = '\tglobal _start\n' \
+if args.string:
+    with open(file_input, 'r', encoding='unicode_escape') as input_file:
+        s = input_file.read().replace('\n', '')
+        with open(filename + '.bin', 'wb') as gen_file:
+            gen_file.write(b'' + bytes(s, encoding='raw_unicode_escape'))
+            file_input = filename + '.bin'
+
+asm_file_contents = '\tglobal _start\n' \
     '\tsection .text\n' \
     '_start:\n' \
-    '\tincbin "' + args.input + '"\n'
+    '\tincbin "' + file_input + '"\n'
 
 with open(filename + '.asm', 'w+') as f:
-    f.write(ASM_FILE_CONTENTS)
+    f.write(asm_file_contents)
 
 cmd = os.getcwd() + '/tools/nasm/nasm'
 if os.name != 'posix':
@@ -62,3 +75,6 @@ subprocess.check_output(cmd, shell=True)
 
 os.remove(filename + '.obj')
 os.remove(filename + '.asm')
+
+if os.path.exists(filename + '.bin'):
+    os.remove(filename + '.bin')
