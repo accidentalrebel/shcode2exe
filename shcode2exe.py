@@ -6,7 +6,7 @@ import sys
 import subprocess
 from argparse import ArgumentParser
 
-parser = ArgumentParser(description='Compile a binary shellcode blob into an exe file. Can target both 32bit or 64bit architecture.')
+parser = ArgumentParser(description='Compile shellcode into an exe file from Windows or Linux.')
 parser.add_argument('-o',
                     '--output',
                     help='Set output exe file.')
