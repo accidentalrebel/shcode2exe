@@ -5,13 +5,28 @@ Compile shellcode into an exe file from Windows or Linux.
   * Can accept a shellcode blob or string (String format `\x5e\x31`)
   * Can target both 32bit or 64bit Windows architecture. 
   * Cross platform. Works on Linux or Windows.
-  * No external dependencies except for Python (No need for Wine)
+  * No dependency on Wine when running on Linux
   * Tested working with Python v3.3 and above
   * Tested working on Windows 7 (Non SP1) and above
   
 Created mainly for malware analysis but can also be used for exploit development. 
 
 Inspired by [shellcode2exe](https://github.com/repnz/shellcode2exe).
+
+## Dependencies
+  * [Netwide Assembler (NASM)](https://www.nasm.us/)
+  * [GNU Linker](https://linux.die.net/man/1/ld)
+  
+For Linux, install the above dependencies via a package manager. 
+
+```
+$ sudo apt install nasm
+$ sudo apt install binutils
+```
+
+For Windows, you can install nasm from [here](https://www.nasm.us/). As for the linker, you can get the 64-bit version of `ld.exe` by installing [MingW-w64](http://mingw-w64.org/doku.php). 
+
+As an alternative, the binaries for both the compiler and linkers are also included in the tools folders. Add them to your paths to use them. It is advisable for users to install the latest versions directly using the steps above.
 
 ## Usage
 ```
