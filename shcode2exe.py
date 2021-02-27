@@ -43,7 +43,7 @@ def CompileShellCode(arguments):
         raise SystemExit(1)
 
     if arguments['string']:
-        file_input = convertToBin(file_input, filename)
+        file_input = ConvertToBin(file_input, filename)
         if arguments['verbose']:
             print("Converting input file to {}.bin".format(filename))
 
