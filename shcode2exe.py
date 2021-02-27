@@ -5,16 +5,15 @@ import shutil
 import subprocess
 from argparse import ArgumentParser
 
-
 def CheckRequirementsMet(arg_vars):
     requirements = ['ld','nasm']
 
     for prog in requirements:
         if shutil.which(prog) is None:
             if prog == 'ld':
-                print("{} is not installed or found. Ensure it is installed (sudo apt install binutils) and in your PATH and try again.".format(prog))
+                print("{} is not installed or found. Ensure it is installed (e.g. 'sudo apt install binutils') and in your PATH and try again.".format(prog))
             elif prog == 'nasm':
-                print("{} is not installed or found. Ensure it is installed (sudo apt install nasm) and in your PATH and try again.".format(prog))
+                print("{} is not installed or found. Ensure it is installed (e.g 'sudo apt install nasm') and in your PATH and try again.".format(prog))
             else:
                 print("Unmatched or unidentified requirements")
             raise SystemExit(1)

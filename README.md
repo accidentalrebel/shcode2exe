@@ -26,7 +26,7 @@ $ sudo apt install binutils
 
 For Windows, you can install nasm from [here](https://www.nasm.us/). As for the linker, you can get the 64-bit version of `ld.exe` by installing [MingW-w64](http://mingw-w64.org/doku.php). 
 
-As an alternative, the binaries for both the compiler and linkers are also included in the tools folders. Add them to your paths to use them. It is advisable for users to install the latest versions directly using the steps above.
+As an alternative, the binaries for both the compiler and linkers are also included in the tools folders. Add them to your paths to use them. It is however advisable for users to install the latest versions directly using the steps above.
 
 ## Usage
 ```
