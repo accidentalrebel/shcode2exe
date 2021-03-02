@@ -42,9 +42,9 @@ def CompileShellCode(arguments):
         raise SystemExit(1)
 
     if arguments['string']:
-        file_input = ConvertToBin(file_input, filename)
+        file_input = ConvertToBin(file_input, filename + '-gen')
         if arguments['verbose']:
-            print("Converting input file to {}.bin".format(filename))
+            print("Converting input file to {}-gen.bin".format(filename))
 
     asm_file_contents = '\tglobal _start\n' \
         '\tsection .text\n' \
@@ -81,12 +81,12 @@ def CompileShellCode(arguments):
 
     if not arguments['keep']:
         if arguments['verbose']:
-            print("Attempting to remove {0}.obj, {0}.asm, and {0}.bin (if present)".format(filename))
+            print("Attempting to remove {0}.obj, {0}.asm, and {0}-gen.bin (if present)".format(filename))
         os.remove(filename + '.obj')
         os.remove(filename + '.asm')
 
-        if os.path.exists(filename + '.bin'):
-            os.remove(filename + '.bin')
+        if os.path.exists(filename + '-gen.bin'):
+            os.remove(filename + '-gen.bin')
 
 def main():
     parser = ArgumentParser(description='Compile shellcode into an exe file from Windows or Linux.')
