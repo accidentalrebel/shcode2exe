@@ -89,5 +89,8 @@ Program appends the shellcode binary to a barebones assembly file using the `inc
 ## Todos
   * Single binary release for easy deployment (So no need for Python)
 
+## Credits
+  * [f4yd4-s3c](https://github.com/f4yd4-s3c) - Fix to hide console window on Windows execution
+
 ## Contributing
 Feel free to submit a pull request if you want to improve this tool!
