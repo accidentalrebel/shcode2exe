@@ -6,8 +6,8 @@ Compile shellcode into an exe file from Windows or Linux.
   * Can target both 32bit or 64bit Windows architecture. 
   * Cross platform. Works on Linux or Windows.
   * No dependency on Wine when running on Linux
-  * Tested working with Python v3.3 and above
-  * Tested working on Windows 7 (Non SP1) and above
+  * Tested working with Python v3.10 and above
+  * Latest version tested working on Windows 11
   
 Created mainly for malware analysis but can also be used for exploit development. 
 
@@ -26,7 +26,23 @@ $ sudo apt install binutils
 
 For Windows, you can install nasm from [here](https://www.nasm.us/). As for the linker, you can get the 64-bit version of `ld.exe` by installing [MingW-w64](http://mingw-w64.org/doku.php). 
 
-As an alternative, the binaries for both the compiler and linkers are also included in the tools folders. Add them to your paths to use them. It is however advisable for users to install the latest versions directly using the steps above.
+### Using Bundled Tools on Windows
+
+As an alternative, pre-compiled binaries are included in the `tools/` directory. To use them:
+
+**Command Prompt:**
+```cmd
+set PATH=%CD%\tools\nasm;%CD%\tools\linkers;%PATH%
+python shcode2exe.py -o output.exe test.bin
+```
+
+**PowerShell:**
+```powershell
+$env:PATH = "$PWD\tools\nasm;$PWD\tools\linkers;$env:PATH"
+python shcode2exe.py -o output.exe test.bin
+```
+
+Note: It is advisable to install the latest versions directly using the official installers above for production use.
 
 ## Usage
 ```
@@ -88,6 +104,9 @@ Program appends the shellcode binary to a barebones assembly file using the `inc
 
 ## Todos
   * Single binary release for easy deployment (So no need for Python)
+
+## Credits
+  * [f4yd4-s3c](https://github.com/f4yd4-s3c) - Fix to hide console window on Windows execution
 
 ## Contributing
 Feel free to submit a pull request if you want to improve this tool!
